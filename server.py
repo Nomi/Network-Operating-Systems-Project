@@ -145,5 +145,8 @@ def logout():
     session.pop('username', None)
     return redirect(url_for('login'))
 
+def getStringContainingTheWordAdminLowercase():
+    return "admin"
+
 if __name__ == '__main__':
    app.run(debug=True, port=8989, host='0.0.0.0')
