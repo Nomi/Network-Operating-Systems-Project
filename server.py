@@ -33,9 +33,9 @@ def home(message=""):
         <form action="/upload" method="get">
             <input type="submit" value="Upload file" name="Submit" id="upload" />
         </form>
-        <form action="/download">
-        <input type=text name=file>
-        <input type=submit value=Download>
+        <form action="/delete">
+        <input type=text placeholder="Enter file to delete here." name=file>
+        <input type=submit value=Delete>
         </form>
         ''' + "Contents:<br><br>" + output
 
@@ -53,12 +53,14 @@ def allowed_file(filename):
            filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
 
 @app.route("/delete")
-def download():
+def delete():
     filename = request.args.get('file')
     if filename in os.listdir('./files'):
-        return send_file(os.path.join('./files/', filename), as_attachment=True)
+        os.remove(os.path.join('./files',filename))
+        flash("File deleted!")
+        return redirect(url_for('home'))
     else:
-        return "No such file on server"
+        return "No such file on server."
 
 
 @app.route('/upload', methods=['GET', 'POST'])
