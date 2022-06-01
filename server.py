@@ -26,7 +26,7 @@ def home(message=""):
         <input type="hidden" name="file" + value="''' +entry+'''">
         <input type=submit value=DL>
         </form>'''
-    return "Logged in!<br>" + '''
+    return "Logged in!<br><br>" + '''
         <form action="/logout" method="get">
             <input type="submit" value="Logout" name="Submit" id="goto_logout" />
         </form>
@@ -66,7 +66,7 @@ def upload_file():
             if file and allowed_file(file.filename):
                 filename = secure_filename(file.filename)
                 file.save(os.path.join('./files/', filename))
-                return "Upload successful" + '''
+                return "Upload successful<br><br>" + '''
                 <form action="/" method="get">
                     <input type="submit" value="Go to files" name="Submit" id="goto_files" />
                 </form>
@@ -124,12 +124,21 @@ def login():
                 </form>
                 '''
     return '''
+        <h2>Login to your account</h2>
         <form action="" method="post">
             <p><input type=text name=username>
             <p><input type=password name=password>
             <p><input type=submit value=Login>
         </form>
         '''
+    # return '''<div class="log-form">
+    #     <h2>Login to your account</h2>
+    #     <form action="" method="post">
+    #         <input type="text" placeholder="username" name=username/>
+    #         <input type="password" placeholder="password" name=password/>
+    #         <input type=submit value="Login"/>
+    #     </form>
+    #     </div><!--end log form -->'''
 
 @app.route('/logout')
 def logout():
