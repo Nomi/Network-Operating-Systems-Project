@@ -52,6 +52,15 @@ def allowed_file(filename):
     return '.' in filename and \
            filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
 
+@app.route("/delete")
+def download():
+    filename = request.args.get('file')
+    if filename in os.listdir('./files'):
+        return send_file(os.path.join('./files/', filename), as_attachment=True)
+    else:
+        return "No such file on server"
+
+
 @app.route('/upload', methods=['GET', 'POST'])
 def upload_file():
     if 'username' in session:
